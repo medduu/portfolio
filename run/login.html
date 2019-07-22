@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Please Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+  </head>
+  <body>
+     <div class="container">
+      <form id="loginForm" name="loginForm" class="form-signin" method="post" action="/login">
+        <h2 class="form-signin-heading">Login</h2>
+        <p>
+          <label for="username" class="sr-only">Username</label>
+          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+        </p>
+        <p>
+          <label for="password" class="sr-only">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="button" onclick="login();">Login</button>
+        <a href="index.html" class="btn btn-lg btn-secondary btn-block">Home</a>
+      </form>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script>
+        function login(){
+            const formData = new FormData(document.loginForm);
+            //formData.append('username', document.loginForm.username.value);
+            //formData.append('password', document.loginForm.password.value);
+            const auth ={
+                'username' : document.loginForm.username.value,
+                'password' : document.loginForm.password.value
+            };
+            $.ajax({
+                url: "http://localhost:8090/api/login",
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(auth),
+                success: function(a,b,c,d,e,f,g){
+                    console.log(a);
+                },
+                error : function(response){
+                    console.log(response.responseJSON.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
